@@ -60,4 +60,21 @@ setValidity("door", function(object){
 
 #2)
 
+setGeneric("PlayGame", #creates a generic function in S4 that takes objects of class "door" as arguments
+           function(object="door") {
+             standardGeneric("PlayGame")
+           } )
+
+setMethod("PlayGame", "door", #creates a method for the above generic function for class "door" 
+          function(object){
+           winner = FALSE
+           object@carDoor = sample (1:3, 1)
+           first_door = sample(1:3, 1)
+           if (object@switch == FALSE) {
+             first_door = object@carDoor
+           }
+           if (object@switch == TRUE) {
+             
+           } 
+          } )
 
