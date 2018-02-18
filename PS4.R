@@ -51,9 +51,9 @@ setValidity("door", function(object){
   check_value3 = object@switch == TRUE | object@switch == FALSE
   check_length3 = (length(object@switch == 1))
   
-  if (!check_value1 | !check_length1){return("object@chosenDoor is not valid")}
-  if (!check_value2 | !check_length2){return("object@carDoor is not valid")}
-  if (!check_value3 | !check_length3){return("object@switch is not valid")}
+  if (!check_value1 | !check_length1){return("object@chosenDoor is not valid, must be 1, 2, or 3")}
+  if (!check_value2 | !check_length2){return("object@carDoor is not valid, must be 1, 2, or 3")}
+  if (!check_value3 | !check_length3){return("object@switch must be TRUE or FALSE")}
 }
 )
 
@@ -73,7 +73,7 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            if (object@switch == FALSE) {
              firstDoor = object@chosenDoor
            }
-           while (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {
+           if (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {
              object@chosenDoor = sample(1:3, 1)
              if (object@chosenDoor == 1){
                choices = c(2, 3)
@@ -81,15 +81,19 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
                choices = c(1, 3)
              } else if (object@chosenDoor == 3){
                choices = c(1, 2)
-              object@chosenDoor = sample(choices, 1)
-             } 
+             } else {
+                print("ERROR")
+              }
+             object@chosenDoor = sample(choices, 1)
+           } 
+           
              if (object@chosenDoor==object@carDoor){
                winner = TRUE
              } else {
                winner = FALSE
              }
            return(winner)
-          } }
+          } 
            )
 
 blankDoor <- new("door", chosenDoor = 3, carDoor = 2, switch = TRUE)
