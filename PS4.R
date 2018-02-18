@@ -71,15 +71,15 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            object@carDoor = sample (1:3, 1)
            firstDoor = sample(1:3, 1)
            if (object@switch == FALSE) {
-             firstDoor = object@carDoor
+             firstDoor = object@chosenDoor
            }
-           while (object@switch == TRUE & chosenDoor != firstDoor & chosenDoor != carDoor) {
-             chosenDoor = sample(1:3, 1)
-             if (chosenDoor == 1){
+           while (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {
+             object@chosenDoor = sample(1:3, 1)
+             if (object@chosenDoor == 1){
                choices = c(2, 3)
-             } else if (chosenDoor == 2){
+             } else if (object@chosenDoor == 2){
                choices = c(1, 3)
-             } else if (chosenDoor == 3){
+             } else if (object@chosenDoor == 3){
                choices = c(1, 2)
               object@chosenDoor = sample(choices, 1)
              } 
@@ -94,3 +94,4 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
 
 blankDoor <- new("door", chosenDoor = 3, carDoor = 2, switch = TRUE)
 PlayGame(blankDoor)
+
