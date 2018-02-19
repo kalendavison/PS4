@@ -14,7 +14,7 @@ myFunction(3, 3)
 # Should return a TRUE if these samples are equal and
 # a false if they are not
 
-#1)
+### Part 1 ###
 
 #Create a new S4 class door
 
@@ -58,7 +58,7 @@ setValidity("door", function(object){
 )
 
 
-#2)
+### Part 2 ###
 
 setGeneric("PlayGame", #creates a generic function in S4 that takes objects of class "door" as arguments
            function(object="door") {
@@ -72,6 +72,7 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            if (object@switch == FALSE) {
              firstDoor = object@chosenDoor
            }
+           browser()
            if (object@switch == TRUE)  {  
              control = FALSE
              while(control == FALSE){
@@ -89,7 +90,6 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
              } 
              object@chosenDoor = sample(choices, 1)
            } 
-browser()
            winner = (object@carDoor == object@chosenDoor)
            return(winner)
           } 
