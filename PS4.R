@@ -72,29 +72,32 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            if (object@switch == FALSE) {
              firstDoor = object@chosenDoor
            }
-           browser()
            if (object@switch == TRUE)  {  
              control = FALSE
-             while(control == FALSE){
+             while(control == FALSE){ #while loop that keeps randomly picking a door until it satisfies the criteria that it's not the same as the car door or the first door chosen by the contestant.
                object@chosenDoor = sample(1:3, 1)
                if (object@chosenDoor != object@carDoor & object@chosenDoor != firstDoor){
                  control = TRUE
                }
-             }
-             if (object@chosenDoor == 1){
+             } #below is read only if the chosen door is not the same as the car door or first door chosen
+             if (object@chosenDoor == 1){ 
                choices = c(2, 3)
              } else if (object@chosenDoor == 2){
                choices = c(1, 3)
              } else if (object@chosenDoor == 3){
-               choices = c(1, 2)
+               choices = c(1, 2) # choosing only between the doors still available
              } 
-             object@chosenDoor = sample(choices, 1)
+             object@chosenDoor = sample(choices, 1) #choose randomly between one of the two doors available
            } 
-           winner = (object@carDoor == object@chosenDoor)
+           winner = (object@carDoor == object@chosenDoor) #returns TRUE if contestant chooses the car door and FALSE if they don't ultimately.
            return(winner)
           } 
            )
 
+debug(PlayGame)
+PlayGame(switch)
+undebug(PlayGame)
+traceback()
 
 ### Part 3: Simulation ###
 
@@ -130,4 +133,5 @@ NoSwitchTable
 PercentWonNoSwitch = NoSwitchTable[2]/10
 paste("Player that did not switch won", PercentWonNoSwitch, "% of the time.")
 
-#Switch wins more.
+#After comparing the percentages from both strategies, it is clear that switching is a better strategy.
+
