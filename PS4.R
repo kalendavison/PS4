@@ -67,36 +67,38 @@ setGeneric("PlayGame", #creates a generic function in S4 that takes objects of c
 
 setMethod("PlayGame", "door", #creates a method for the above generic function for class "door" 
           function(object){
-           winner = FALSE
            object@carDoor = sample (1:3, 1)
            firstDoor = sample(1:3, 1)
            if (object@switch == FALSE) {
              firstDoor = object@chosenDoor
            }
-           if (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {  #need to fix this line
-             object@chosenDoor = sample(1:3, 1)
+           if (object@switch == TRUE)  {  
+             control = FALSE
+             while(control == FALSE){
+               object@chosenDoor = sample(1:3, 1)
+               if (object@chosenDoor != object@carDoor & object@chosenDoor != firstDoor){
+                 control = TRUE
+               }
+             }
              if (object@chosenDoor == 1){
                choices = c(2, 3)
              } else if (object@chosenDoor == 2){
                choices = c(1, 3)
              } else if (object@chosenDoor == 3){
                choices = c(1, 2)
-             } else {
-                print("ERROR")
-              }
+             } 
              object@chosenDoor = sample(choices, 1)
            } 
-           
-             if (object@chosenDoor==object@carDoor){
-               winner = TRUE
-             } else {
-               winner = FALSE
-             }
+browser()
+           winner = (object@carDoor == object@chosenDoor)
            return(winner)
           } 
            )
 
-switch = new("door", chosenDoor = 3, carDoor = 2, switch = TRUE)
+
+### Part 3: Simulation ###
+
+switch = new("door", chosenDoor = 1, carDoor = 2, switch = TRUE)
 PlayGame(switch)
 
 PlaySwitch = function(i){
@@ -108,6 +110,9 @@ PlaySwitch = function(i){
 Switch = sapply(c(1:1000), PlaySwitch)
 SwitchTable = table(Switch)
 SwitchTable
+PercentWonSwitch = SwitchTable[2]/10
+paste("Player that switched won", PercentWonSwitch, "% of the time.")
+
 
 
 noSwitch = new("door", chosenDoor = 3, carDoor = 2, switch = FALSE)
@@ -122,5 +127,7 @@ PlayNoSwitch = function(i){
 NoSwitch = sapply(c(1:1000), PlayNoSwitch)
 NoSwitchTable = table(NoSwitch)
 NoSwitchTable
+PercentWonNoSwitch = NoSwitchTable[2]/10
+paste("Player that did not switch won", PercentWonNoSwitch, "% of the time.")
 
-
+#Switch wins more.
