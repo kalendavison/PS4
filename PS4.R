@@ -73,7 +73,7 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            if (object@switch == FALSE) {
              firstDoor = object@chosenDoor
            }
-           if (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {
+           if (object@switch == TRUE & object@chosenDoor != firstDoor & object@chosenDoor != object@carDoor) {  #need to fix this line
              object@chosenDoor = sample(1:3, 1)
              if (object@chosenDoor == 1){
                choices = c(2, 3)
@@ -96,6 +96,31 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
           } 
            )
 
-blankDoor <- new("door", chosenDoor = 3, carDoor = 2, switch = TRUE)
-PlayGame(blankDoor)
+switch = new("door", chosenDoor = 3, carDoor = 2, switch = TRUE)
+PlayGame(switch)
+
+PlaySwitch = function(i){
+  test = new("door", chosenDoor = 2, carDoor = 1, switch = TRUE)
+  out = PlayGame(test)
+  return(out)
+}
+
+Switch = sapply(c(1:1000), PlaySwitch)
+SwitchTable = table(Switch)
+SwitchTable
+
+
+noSwitch = new("door", chosenDoor = 3, carDoor = 2, switch = FALSE)
+PlayGame(noswitch)
+
+PlayNoSwitch = function(i){
+  test = new("door", chosenDoor = 2, carDoor = 1, switch = FALSE)
+  out = PlayGame(test)
+  return(out)
+}
+
+NoSwitch = sapply(c(1:1000), PlayNoSwitch)
+NoSwitchTable = table(NoSwitch)
+NoSwitchTable
+
 
