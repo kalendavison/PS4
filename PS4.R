@@ -1,7 +1,9 @@
 # Kalen Davison
+# Professor Montgomery
 # PS4
 # Due 2/22/18
 
+### fixing the "starter function" ###
 myFunction <- function(car, choice){
   if (car==choice){
     print(TRUE)
@@ -9,7 +11,8 @@ myFunction <- function(car, choice){
       print(FALSE)
 }
 
-myFunction(3, 3)
+myFunction(3, 3) #TRUE
+myFunction(1, 2) #FALSE
 
 # Should return a TRUE if these samples are equal and
 # a false if they are not
@@ -80,12 +83,12 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
                  control = TRUE
                }
              } #below is read only if the chosen door is not the same as the car door or first door chosen
-             if (object@chosenDoor == 1){ 
+               if (object@chosenDoor == 1){ 
                choices = c(2, 3)
              } else if (object@chosenDoor == 2){
-               choices = c(1, 3)
+                 choices = c(1, 3)
              } else if (object@chosenDoor == 3){
-               choices = c(1, 2) # choosing only between the doors still available
+                choices = c(1, 2) # choosing only between the doors still available
              } 
              object@chosenDoor = sample(choices, 1) #choose randomly between one of the two doors available
            } 
@@ -101,27 +104,8 @@ traceback()
 
 ### Part 3: Simulation ###
 
-switch = new("door", chosenDoor = 1, carDoor = 2, switch = TRUE)
-PlayGame(switch)
-
-PlaySwitch = function(i){
-  test = new("door", chosenDoor = 2, carDoor = 1, switch = TRUE)
-  out = PlayGame(test)
-  return(out)
-}
-
-Switch = sapply(c(1:1000), PlaySwitch)
-SwitchTable = table(Switch)
-SwitchTable
-PercentWonSwitch = SwitchTable[2]/10
-paste("Player that switched won", PercentWonSwitch, "% of the time.")
-
-
-
-noSwitch = new("door", chosenDoor = 3, carDoor = 2, switch = FALSE)
-PlayGame(noswitch)
-
-PlayNoSwitch = function(i){
+#1) No Switch Strategy
+PlayNoSwitch = function(i){  #Not switch strategy function to be inputted into sapply function
   test = new("door", chosenDoor = 2, carDoor = 1, switch = FALSE)
   out = PlayGame(test)
   return(out)
@@ -131,7 +115,22 @@ NoSwitch = sapply(c(1:1000), PlayNoSwitch)
 NoSwitchTable = table(NoSwitch)
 NoSwitchTable
 PercentWonNoSwitch = NoSwitchTable[2]/10
-paste("Player that did not switch won", PercentWonNoSwitch, "% of the time.")
+paste("Player that did not switch won", PercentWonNoSwitch, "% of the time.") # around 33.3% win rate
+
+#3) Switch Strategy
+
+PlaySwitch = function(i){ #Switch strategy function to be input into sapply function
+  test = new("door", chosenDoor = 2, carDoor = 1, switch = TRUE)
+  out = PlayGame(test)
+  return(out)
+}
+
+Switch = sapply(c(1:1000), PlaySwitch)
+SwitchTable = table(Switch)
+SwitchTable
+PercentWonSwitch = SwitchTable[2]/10
+paste("Player that switched won", PercentWonSwitch, "% of the time.") # around 50% win rate
+
 
 #After comparing the percentages from both strategies, it is clear that switching is a better strategy.
 
