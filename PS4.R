@@ -1,7 +1,7 @@
 # Kalen Davison
 # Professor Montgomery
 # PS4
-# Due 2/22/18
+# Due 2/20/18
 
 ### fixing the "starter function" ###
 myFunction <- function(car, choice){
@@ -21,7 +21,7 @@ myFunction(1, 2) #FALSE
 
 #Create a new S4 class door
 
-setClass(Class = "door", #creates door class in S4, numeric data.
+setClass(Class = "door", #creates door class in S4 with three different slots.
          representation = representation(
            chosenDoor = "numeric",
            carDoor = "numeric",
@@ -73,7 +73,7 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
            object@carDoor = sample (1:3, 1)
            firstDoor = sample(1:3, 1)
            if (object@switch == FALSE) {
-             firstDoor = object@chosenDoor
+             firstDoor = object@chosenDoor #if the strategy is to not switch, the first door chosen by the contestant is the final door.
            }
            if (object@switch == TRUE)  {  
              control = FALSE
@@ -97,7 +97,7 @@ setMethod("PlayGame", "door", #creates a method for the above generic function f
           } 
            )
 
-debug(PlayGame)
+debug(PlayGame) #played around with debug and traceback but they were not entirely functional in S4.
 PlayGame(switch)
 undebug(PlayGame)
 traceback()
